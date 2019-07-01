@@ -47,6 +47,7 @@
 
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
+        document.addEventListener("mousemove", mouseMoveHandler, false);
 
         function keyDownHandler(e){
             if(e.key === "Right" || e.key === "ArrowRight"){
@@ -67,6 +68,22 @@
             else if(e.key === "Left" || e.key === "ArrowLeft"){
                 leftPressed = false;
                 console.log(leftPressed);
+            }
+        }
+
+        function mouseMoveHandler(e) {
+            console.log(e.clientX);
+            console.log(canvas.offsetLeft);
+            var relativeX = e.clientX - canvas.offsetLeft;
+            if(relativeX > 0 && relativeX < canvas.width){
+                paddleX = relativeX - paddleWidth/2;
+
+                if(relativeX < 0 + paddleWidth/2){
+                    paddleX = 0;
+                }
+                else if(relativeX > canvas.width-paddleWidth/2){
+                    paddleX = canvas.width - paddleWidth;
+                }
             }
         }
 
