@@ -60,7 +60,8 @@
         }
 
         var score = 0;
-        var lives = 2;
+        var maxLives = 3;
+        var lives = maxLives;
         var point = 0;
 
         var maxCombo = 1;
@@ -238,8 +239,8 @@
                 comboFlug = false;
 
                 if(x > paddleX && x < paddleX + paddleWidth){
-                    dx = dx * 1.2;
-                    dy = -dy * 1.2;
+                    dx = dx * (1 + maxLives / 50);
+                    dy = -dy * (1 + lives / 50);
                 }
                 else{
 
