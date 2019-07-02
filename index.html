@@ -44,9 +44,10 @@
         }
 
         var score = 0;
-        var lives = 3;
+        var lives = 2;
 
         var currentColor = "#0095DD";
+        var currentPaddleColor = "#0095DD";
         var colors = [
             "#FF949F",
             "#7AD3FF",
@@ -141,10 +142,10 @@
             ctx.closePath();
         }
 
-        function drawPaddle() {
+        function drawPaddle(color) {
             ctx.beginPath();
             ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-            ctx.fillStyle = "#0095DD";
+            ctx.fillStyle = color;
             ctx.fill();
             ctx.closePath();
         }
@@ -176,7 +177,7 @@
 
             drawBall(currentColor);
 
-            drawPaddle();
+            drawPaddle(currentPaddleColor);
 
             drawScore();
 
@@ -201,7 +202,10 @@
 
                     lives--;
 
-                    if(!lives){
+                    currentPaddleColor = randomColor();
+                    paddleWidth = paddleWidth * 1.5;
+
+                    if(0>lives){
                         alert("GAME OVER");
                         document.location.reload();
                     }
