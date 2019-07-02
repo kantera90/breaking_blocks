@@ -46,15 +46,13 @@
         var score = 0;
         var lives = 2;
 
-        var currentColor = "#0095DD";
-        var currentPaddleColor = "#0095DD";
+        var currentColor = "#4695d6";
+        var currentPaddleColor = "#4695d6";
         var colors = [
-            "#FF949F",
-            "#7AD3FF",
-            "#CCC84E",
-            "#596650",
-            "#94FF47",
-            "#FF4321"
+            "#4695d6",
+            "#fed95c",
+            "#fa6e57",
+            "#f69e53"
         ];
 
         document.addEventListener("keydown", keyDownHandler, false);
@@ -124,13 +122,13 @@
 
         function drawScore() {
             ctx.font = "16px Arial";
-            ctx.fillStyle = "#0095DD";
+            ctx.fillStyle = "#4695d6";
             ctx.fillText("Score:" + score, 8, 20);
         }
 
         function drawLives() {
             ctx.font = "16px Arial";
-            ctx.fillStyle = "#0095DD";
+            ctx.fillStyle = "#4695d6";
             ctx.fillText("Lives:"+ lives, canvas.width - 65, 20);
         }
 
@@ -160,7 +158,7 @@
                         bricks[c][r].y = brickY;
                         ctx.beginPath();
                         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                        ctx.fillStyle = "#0095DD";
+                        ctx.fillStyle = "#4695d6";
                         ctx.fill();
                         ctx.closePath();
                     }
