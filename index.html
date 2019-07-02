@@ -23,6 +23,7 @@
         var paddleHeight = 10;
         var paddleWidth = 75;
         var paddleX = (canvas.width-paddleWidth)/2;
+        var paddleDX = 7;
 
         var rightPressed = false;
         var leftPressed = false;
@@ -66,22 +67,18 @@
         function keyDownHandler(e){
             if(e.key === "Right" || e.key === "ArrowRight"){
                 rightPressed = true;
-                console.log(rightPressed);
             }
             else if(e.key === "Left" || e.key === "ArrowLeft" ){
                 leftPressed = true;
-                console.log(leftPressed);
             }
         }
 
         function keyUpHandler(e){
             if(e.key === "Right" || e.key === "ArrowRight"){
                 rightPressed = false;
-                console.log(rightPressed);
             }
             else if(e.key === "Left" || e.key === "ArrowLeft"){
                 leftPressed = false;
-                console.log(leftPressed);
             }
         }
 
@@ -202,6 +199,7 @@
 
                     currentPaddleColor = randomColor();
                     paddleWidth = paddleWidth * 1.5;
+                    paddleDX = paddleDX * 1.1;
 
                     if(0>lives){
                         alert("GAME OVER");
@@ -218,10 +216,10 @@
             }
 
             if(rightPressed && paddleX < canvas.width-paddleWidth){
-                paddleX += 7;
+                paddleX += paddleDX;
             }
             else if(leftPressed && paddleX > 0){
-                paddleX -=7;
+                paddleX -= paddleDX;
             }
 
             x += dx;
