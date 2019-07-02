@@ -20,33 +20,6 @@
         var dx = 2;
         var dy = -2;
 
-        var paddleHeight = 10;
-        var paddleWidth = 75;
-        var paddleX = (canvas.width-paddleWidth)/2;
-        var paddleDX = 7;
-
-        var rightPressed = false;
-        var leftPressed = false;
-
-        var brickRowCount = 3;
-        var brickColumnCount = 5;
-        var brickWidth = 75;
-        var brickHeight = 20;
-        var brickPadding = 10;
-        var brickOffsetTop = 30;
-        var brickOffsetLeft = 30;
-
-        var bricks = [];
-        for(var c=0; c<brickColumnCount; c++) {
-            bricks[c] = [];
-            for(var r= 0; r<brickRowCount; r++) {
-                bricks[c][r] = {x: 0, y: 0, status: 1};
-            }
-        }
-
-        var score = 0;
-        var lives = 2;
-
         var currentColor = "#4695d6";
         var currentPaddleColor = "#4695d6";
         var colors = [
@@ -55,6 +28,32 @@
             "#fa6e57",
             "#f69e53"
         ];
+
+        var paddleHeight = 10;
+        var paddleWidth = 75;
+        var paddleX = (canvas.width-paddleWidth)/2;
+        var paddleDX = 7;
+
+        var rightPressed = false;
+        var leftPressed = false;
+
+        var brickRowCount = 5;
+        var brickColumnCount = 5;
+        var brickWidth = 75;
+        var brickHeight = 20;
+        var brickPadding = 10;
+        var brickOffsetTop = 30;
+        var brickOffsetLeft = 30;
+        var bricks = [];
+        for(var c=0; c<brickColumnCount; c++) {
+            bricks[c] = [];
+            for(var r= 0; r<brickRowCount; r++) {
+                bricks[c][r] = {x: 0, y: 0, status: 1, color: randomColor()};
+            }
+        }
+
+        var score = 0;
+        var lives = 2;
 
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
@@ -83,8 +82,6 @@
         }
 
         function mouseMoveHandler(e) {
-            console.log(e.clientX);
-            console.log(canvas.offsetLeft);
             var relativeX = e.clientX - canvas.offsetLeft;
             if(relativeX > 0 && relativeX < canvas.width){
                 paddleX = relativeX - paddleWidth/2;
@@ -155,7 +152,7 @@
                         bricks[c][r].y = brickY;
                         ctx.beginPath();
                         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                        ctx.fillStyle = "#4695d6";
+                        ctx.fillStyle = bricks[c][r].color;
                         ctx.fill();
                         ctx.closePath();
                     }
