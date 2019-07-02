@@ -104,6 +104,9 @@
                             dy = -dy;
                             b.status = 0;
                             score++;
+
+                            currentColor = randomColor();
+
                             if(score === brickRowCount*brickColumnCount){
                                 alert("YOU WIN, CONGRATULATIONS!");
                                 document.location.reload();
