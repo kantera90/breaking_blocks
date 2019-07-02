@@ -44,16 +44,28 @@
         var brickPadding = 10;
         var brickOffsetTop = 30;
         var brickOffsetLeft = 30;
+
         var bricks = [];
         for(var c=0; c<brickColumnCount; c++) {
             bricks[c] = [];
             for(var r= 0; r<brickRowCount; r++) {
-                bricks[c][r] = {x: 0, y: 0, status: 1, color: randomColor()};
+                bricks[c][r] = {
+                    x: 0,
+                    y: 0,
+                    status: 1,
+                    color: randomColor(),
+                    point: 100
+                };
             }
         }
 
         var score = 0;
         var lives = 2;
+        var point = 0;
+
+        var maxCombo = 1;
+        var combo = 0;
+        var comboFlug = false;
 
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
@@ -104,11 +116,26 @@
                             dy = -dy;
                             b.status = 0;
                             score++;
-
                             currentColor = randomColor();
+                            point += b.point;
+
+                            if(comboFlug === true || combo === 0){
+
+                                if(combo !== 0){
+                                    point += Math.floor(point * 1.2) - point;
+                                }
+                                combo++;
+                            }
+
+                            comboFlug = true;
+
+                            if(combo > maxCombo){
+                                maxCombo = combo;
+                            }
 
                             if(score === brickRowCount*brickColumnCount){
                                 alert("YOU WIN, CONGRATULATIONS!");
+                                alert("RESULT: " + point + " points! / MAX COMBO: " + maxCombo);
                                 document.location.reload();
                             }
                         }
@@ -121,6 +148,18 @@
             ctx.font = "16px Arial";
             ctx.fillStyle = "#4695d6";
             ctx.fillText("Score:" + score, 8, 20);
+        }
+
+        function drawCombo() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#4695d6";
+            ctx.fillText("COMBO:" + combo, 200 , 20);
+        }
+
+        function drawPoint() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#4695d6";
+            ctx.fillText("Points:" + point, 80 , 20);
         }
 
         function drawLives() {
@@ -178,6 +217,10 @@
 
             drawLives();
 
+            drawPoint();
+
+            drawCombo();
+
             collisionDetection();
 
             if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -190,6 +233,10 @@
                 currentColor = randomColor();
             }
             else if(y + dy > canvas.height-ballRadius){
+
+                combo = 0;
+                comboFlug = false;
+
                 if(x > paddleX && x < paddleX + paddleWidth){
                     dx = dx * 1.2;
                     dy = -dy * 1.2;
@@ -201,9 +248,9 @@
                     currentPaddleColor = randomColor();
                     paddleWidth = paddleWidth * 1.5;
                     paddleDX = paddleDX * 1.1;
-
                     if(0>lives){
                         alert("GAME OVER");
+                        alert("RESULT: " + point + " points! / MAX COMBO: " + maxCombo);
                         document.location.reload();
                     }
                     else{
