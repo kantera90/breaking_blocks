@@ -1,0 +1,30 @@
+{
+  "name": "breaking_blocks",
+  "version": "1.0.0",
+  "description": "https://developer.mozilla.org/ja/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kantera90/breaking_blocks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kantera90/breaking_blocks/issues"
+  },
+  "homepage": "https://github.com/kantera90/breaking_blocks#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.0",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.0",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2"
+  }
+}
