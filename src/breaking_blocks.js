@@ -14,44 +14,49 @@ export default class breaking_blocks{
 
     view() {
 
-        var canvas = document.getElementById("myCanvas");
-        var ctx = canvas.getContext("2d");
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
 
-        var x = canvas.width/2;
-        var y = canvas.height-30;
-        var ballRadius = 10;
-        var dx = 2;
-        var dy = -2;
+        let x = canvas.width/2;
+        let y = canvas.height-30;
 
-        var currentColor = "#4695d6";
-        var currentPaddleColor = "#4695d6";
-        var colors = [
+        const ballRadius = 10;
+        let dx = 2;
+        let dy = -2;
+
+        let currentColor= "#4695d6";
+        let currentPaddleColor = "#4695d6";
+        const colors = [
             "#4695d6",
             "#fed95c",
             "#fa6e57",
             "#f69e53"
         ];
 
-        var paddleHeight = 10;
-        var paddleWidth = 75;
-        var paddleX = (canvas.width-paddleWidth)/2;
-        var paddleDX = 7;
+        let paddleHeight = 10;
+        let paddleWidth = 75;
+        let paddleX = (canvas.width-paddleWidth)/2;
+        let paddleDX = 7;
 
-        var rightPressed = false;
-        var leftPressed = false;
+        let rightPressed = false;
+        let leftPressed = false;
 
-        var brickRowCount = 5;
-        var brickColumnCount = 5;
-        var brickWidth = 75;
-        var brickHeight = 20;
-        var brickPadding = 10;
-        var brickOffsetTop = 30;
-        var brickOffsetLeft = 30;
+        const brickRowCount = 5;
+        const brickColumnCount = 5;
+        const brickWidth = 75;
+        const brickHeight = 20;
+        const brickPadding = 10;
+        const brickOffsetTop = 30;
+        const brickOffsetLeft = 30;
 
-        var bricks = [];
-        for(var c=0; c<brickColumnCount; c++) {
+        const randomColor = () => {
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        let bricks = [];
+        for(let c=0; c<brickColumnCount; c++) {
             bricks[c] = [];
-            for(var r= 0; r<brickRowCount; r++) {
+            for(let r= 0; r<brickRowCount; r++) {
                 bricks[c][r] = {
                     x: 0,
                     y: 0,
@@ -62,24 +67,16 @@ export default class breaking_blocks{
             }
         }
 
-        var score = 0;
-        var maxLives = 3;
-        var lives = maxLives;
-        var point = 0;
+        let score = 0;
+        const maxLives = 3;
+        let lives = maxLives;
+        let point = 0;
 
-        var maxCombo = 1;
-        var combo = 0;
-        var comboFlug = false;
+        let maxCombo = 1;
+        let combo = 0;
+        let comboFlug = false;
 
-        document.addEventListener("keydown", keyDownHandler, false);
-        document.addEventListener("keyup", keyUpHandler, false);
-        document.addEventListener("mousemove", mouseMoveHandler, false);
-
-        function randomColor(){
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        function keyDownHandler(e){
+        const keyDownHandler = (e) => {
             if(e.key === "Right" || e.key === "ArrowRight"){
                 rightPressed = true;
             }
@@ -88,7 +85,7 @@ export default class breaking_blocks{
             }
         }
 
-        function keyUpHandler(e){
+        const keyUpHandler = (e) => {
             if(e.key === "Right" || e.key === "ArrowRight"){
                 rightPressed = false;
             }
@@ -97,9 +94,9 @@ export default class breaking_blocks{
             }
         }
 
-        function mouseMoveHandler(e) {
-            var relativeX = e.clientX - canvas.offsetLeft;
-            if(relativeX > 0 && relativeX < canvas.width){
+        const mouseMoveHandler = (e) => {
+            const relativeX = e.clientX - canvas.offsetLeft;
+            if(0 < relativeX && relativeX < canvas.width){
                 paddleX = relativeX - paddleWidth/2;
 
                 if(relativeX < 0 + paddleWidth/2){
@@ -111,10 +108,14 @@ export default class breaking_blocks{
             }
         }
 
-        function collisionDetection(){
-            for(var c=0; c<brickColumnCount; c++){
-                for(var r=0; r<brickRowCount; r++){
-                    var b = bricks[c][r];
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+        document.addEventListener("mousemove", mouseMoveHandler, false);
+
+        const collisionDetection = () => {
+            for(let c=0; c<brickColumnCount; c++){
+                for(let r=0; r<brickRowCount; r++){
+                    let b = bricks[c][r];
                     if(b.status === 1){
                         if(x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight){
                             dy = -dy;
@@ -148,31 +149,31 @@ export default class breaking_blocks{
             }
         }
 
-        function drawScore() {
+        const drawScore = () => {
             ctx.font = "16px Arial";
             ctx.fillStyle = "#4695d6";
             ctx.fillText("Score:" + score, 8, 20);
-        }
+        };
 
-        function drawCombo() {
+        const drawCombo = () => {
             ctx.font = "16px Arial";
             ctx.fillStyle = "#4695d6";
             ctx.fillText("COMBO:" + combo,  canvas.width - 215 , 20);
-        }
+        };
 
-        function drawPoint() {
+        const drawPoint = () => {
             ctx.font = "16px Arial";
             ctx.fillStyle = "#4695d6";
             ctx.fillText("Points:" + point, 130 , 20);
         }
 
-        function drawLives() {
+        const drawLives = () => {
             ctx.font = "16px Arial";
             ctx.fillStyle = "#4695d6";
             ctx.fillText("Lives:"+ lives, canvas.width - 65, 20);
         }
 
-        function drawBall(color) {
+        const drawBall = color => {
             ctx.beginPath();
             ctx.arc(x, y, ballRadius, 0, Math.PI*2);
             ctx.fillStyle = color;
@@ -180,7 +181,7 @@ export default class breaking_blocks{
             ctx.closePath();
         }
 
-        function drawPaddle(color) {
+        const drawPaddle = color => {
             ctx.beginPath();
             ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
             ctx.fillStyle = color;
@@ -188,12 +189,12 @@ export default class breaking_blocks{
             ctx.closePath();
         }
 
-        function drawBricks() {
-            for(var c=0; c<brickColumnCount; c++){
-                for(var r=0; r<brickRowCount; r++){
+        const drawBricks = () => {
+            for(let c=0; c<brickColumnCount; c++){
+                for(let r=0; r<brickRowCount; r++){
                     if(bricks[c][r].status === 1){
-                        var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
-                        var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+                        let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+                        let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
                         bricks[c][r].x = brickX;
                         bricks[c][r].y = brickY;
                         ctx.beginPath();
@@ -206,25 +207,17 @@ export default class breaking_blocks{
             }
         }
 
-        function draw() {
+        const draw = () => {
 
             //描画コード
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             drawBricks();
-
             drawBall(currentColor);
-
             drawPaddle(currentPaddleColor);
-
             drawScore();
-
             drawLives();
-
             drawPoint();
-
             drawCombo();
-
             collisionDetection();
 
             if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
