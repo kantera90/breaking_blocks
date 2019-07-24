@@ -17,64 +17,39 @@ export default class breaking_blocks{
         const canvas = document.getElementById("myCanvas");
         const ctx = canvas.getContext("2d");
 
-        let x = canvas.width/2;
-        let y = canvas.height-30;
+        let x = canvas.width/2;//ボール位置：ｘ軸
+        let y = canvas.height-30;//ボール位置：ｙ軸
 
-        const ballRadius = 10;
-        let dx = 2;
-        let dy = -2;
+        const ballRadius = 10;//ボール大きさ
+        let dx = 2;//ボールの移動量：ｘ軸
+        let dy = -2;//ボールの移動量：ｙ軸
 
-        let currentColor= "#4695d6";
-        let currentPaddleColor = "#4695d6";
-        const colors = [
-            "#4695d6",
-            "#fed95c",
-            "#fa6e57",
-            "#f69e53"
-        ];
+        let score = 0;//スコア（撃墜数）
 
-        let paddleHeight = 10;
-        let paddleWidth = 75;
-        let paddleX = (canvas.width-paddleWidth)/2;
-        let paddleDX = 7;
+        const maxLives = 3;//残機（最大値）
+        let lives = maxLives;//残機（現在値）
 
-        let rightPressed = false;
-        let leftPressed = false;
+        let point = 0;//ポイント
 
-        const brickRowCount = 5;
-        const brickColumnCount = 5;
-        const brickWidth = 75;
-        const brickHeight = 20;
-        const brickPadding = 10;
-        const brickOffsetTop = 30;
-        const brickOffsetLeft = 30;
+        let maxCombo = 1;//コンポ数（最大値）
+        let combo = 0;//コンボ数（現在地）
+        let comboFlug = false;//コンボ成立か否か
 
-        const randomColor = () => {
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
 
-        let bricks = [];
-        for(let c=0; c<brickColumnCount; c++) {
-            bricks[c] = [];
-            for(let r= 0; r<brickRowCount; r++) {
-                bricks[c][r] = {
-                    x: 0,
-                    y: 0,
-                    status: 1,
-                    color: randomColor(),
-                    point: 100
-                };
-            }
-        }
 
-        let score = 0;
-        const maxLives = 3;
-        let lives = maxLives;
-        let point = 0;
 
-        let maxCombo = 1;
-        let combo = 0;
-        let comboFlug = false;
+
+
+
+
+
+
+        let paddleHeight = 10;//パドル高さ
+        let paddleWidth = 75;//パドル横幅
+        let paddleX = (canvas.width-paddleWidth)/2;//パドル位置：ｘ
+        let paddleDX = 7;//パドル移動量（左右ボタン）
+        let rightPressed = false;//右ボタン押下判定
+        let leftPressed = false;//左ボタン押下判定
 
         const keyDownHandler = (e) => {
             if(e.key === "Right" || e.key === "ArrowRight"){
@@ -112,6 +87,26 @@ export default class breaking_blocks{
         document.addEventListener("keyup", keyUpHandler, false);
         document.addEventListener("mousemove", mouseMoveHandler, false);
 
+
+
+
+
+
+
+
+
+
+
+
+        const brickRowCount = 5;//破壊対象列数
+        const brickColumnCount = 5;//破壊対象行数
+        const brickWidth = 75;//破壊対象横幅
+        const brickHeight = 20;//破壊対象高さ
+        const brickPadding = 10;//破壊対象どうしの余白
+        const brickOffsetTop = 30;//破壊対象グループの余白（上）
+        const brickOffsetLeft = 30;//破壊対象グループの余白（左）
+
+
         const collisionDetection = () => {
             for(let c=0; c<brickColumnCount; c++){
                 for(let r=0; r<brickRowCount; r++){
@@ -146,6 +141,41 @@ export default class breaking_blocks{
                         }
                     }
                 }
+            }
+        }
+
+
+
+
+
+
+
+
+
+        let currentColor= "#4695d6";
+        let currentPaddleColor = "#4695d6";
+        const colors = [
+            "#4695d6",
+            "#fed95c",
+            "#fa6e57",
+            "#f69e53"
+        ];
+
+        const randomColor = () => {
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        let bricks = [];
+        for(let c=0; c<brickColumnCount; c++) {
+            bricks[c] = [];
+            for(let r= 0; r<brickRowCount; r++) {
+                bricks[c][r] = {
+                    x: 0,
+                    y: 0,
+                    status: 1,
+                    color: randomColor(),
+                    point: 100
+                };
             }
         }
 
@@ -206,6 +236,10 @@ export default class breaking_blocks{
                 }
             }
         }
+
+
+
+
 
         const draw = () => {
 
